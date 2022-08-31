@@ -1,0 +1,60 @@
+---
+title: "What kinds of households own cars in the Triangle?"
+format: 
+  html:
+    title-block-banner: true
+    toc: true
+    toc-location: left
+    toc-depth: 3
+    html-math-method: katex
+    code-fold: true
+    code-summary: "show the code"
+    code-overflow: wrap
+    code-tools: true
+    number-sections: true
+    theme: 
+      dark: slate
+      light: flatly
+    fig-width: 9
+    fig-height: 6
+editor: visual
+---
+
+## Introduction
+
+Let's find out how many residents in Orange County, NC own multiple single-family homes or townhomes!
+
+## Get some data
+
+Let's pull in the Orange County parcel data. It's available [here](ParcelsGDB.zip)
+
+```{r, output=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(sf)
+```
+
+```{r, eval = FALSE}
+download.file("https://web.co.orange.nc.us/gisdownloads/ParcelsGDB.zip", destfile = "ParcelsGDB.zip")
+unzip("ParcelsGDB.zip")
+```
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
