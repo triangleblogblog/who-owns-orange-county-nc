@@ -1,5 +1,5 @@
 ---
-title: "What kinds of households own cars in the Triangle?"
+title: "Who owns the single family residences in Orange County, NC"
 format: 
   html:
     title-block-banner: true
