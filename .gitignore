@@ -2,3 +2,16 @@
 .Rhistory
 .RData
 .Ruserdata
+ParcelsGDB.zip
+*.dbf
+*.prj
+*.sbn
+*.sbx
+*.shp
+*.shx
+*.zip
+*.cpg
+ParcelsGDB.mdb
+ParcelsGDB.zip
+city.shp.xml
+ParcelsGDB.zip
