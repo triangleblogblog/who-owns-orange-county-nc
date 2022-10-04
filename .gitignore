@@ -15,3 +15,6 @@ ParcelsGDB.mdb
 ParcelsGDB.zip
 city.shp.xml
 ParcelsGDB.zip
+All_Parcels.geojson
+Overlay_Zoning_Districts.geojson
+Zoning_Districts.geojson
