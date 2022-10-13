@@ -1,5 +1,5 @@
 ---
-title: "Trends in lot and home size over time in Chapel Hill, NC"
+title: "Trends in home and lot size over time in Chapel Hill"
 format: 
   html:
     title-block-banner: true
@@ -20,15 +20,19 @@ format:
 editor: visual
 ---
 
+## Introduction
+
+Let's look at the trend in the lot size and home size of houses built in Chapel Hill over time.
+
 ## Get some data
 
-We need: Year Built, Lot Size, and Floor Size within Chapel Hill
+We need: Year Built Structure Type, Parcel Size, and Floor area.
 
-Let's pull in the Orange County parcel data, It's available [here](ParcelsGDB.zip).
+Let's pull in the Orange County parcel data, which tells us where parcels are and their area. It's available [here](ParcelsGDB.zip).
 
-We also need the Orange County Address data, which has the land use code and Year Built and floor area. That's available [here](%22https://web.co.orange.nc.us/gisdownloads/addresses.zip%22).
+We also need the Orange County Address data, which has the year built, floor area. That's available [here](%22https://web.co.orange.nc.us/gisdownloads/addresses.zip%22).
 
-Finally, we need the municipal boundaries to accurately capture which parcels are relevant. That's available [here](%22https://web.co.orange.nc.us/gisdownloads/city.zip%22).
+Finally, we need the municipal boundaries to accurately capture which jurisdictions are relevant. That's available [here](%22https://web.co.orange.nc.us/gisdownloads/city.zip%22).
 
 ```{r, output=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -36,6 +40,7 @@ library(Hmisc)
 library(mdbr)
 library(knitr)
 library(sf)
+library(gganimate)
 ```
 
 ```{r, eval = FALSE}
@@ -51,117 +56,40 @@ unzip("city.zip")
 
 ## Read in the data!
 
+And get only the Chapel Hill boundary.
+
 ```{r}
 data <- read_mdb("ParcelsGDB.mdb", table="PARCELVIEW")
 addr <- read_sf("addresses.shp")
 city <- read_sf("city.shp")
+ch <- city %>% filter(CITYCODE == "CH") %>% st_union() %>% st_as_sf()
 ```
 
 ## Summarise the data
 
-First, we filter the addresses to only single family-type residences. This includes:
-
--   Detached single-family
-
--   Attached single-family
-
--   Duplex
-
--   Zero lot line row houses
-
--   Accessory units
-
--   Townhouses
-
--   Manufactured houses
-
-This corresponds to those whose address LBCS Structure codes are in category **1100 other than condominiums (category 1170)** and **single apartments (category 1160)**
+First, we filter the addresses to only single family-type residences.
 
 ```{r, results="asis"}
-addr <- addr %>% filter(LBCSSubCod < 1160) %>% filter(LBCSSubCod > 0)
-ggplot(data=addr, aes(x=LBCSDesc)) +
-  geom_bar()
+addr <- addr %>% filter(LBCSSubCod < 1160 & LBCSSubCod >0) 
+addr <- addr[ch,]
+#mapview::mapview(addr,zcol="LBCSDesc")
+parcels <- sf::read_sf("All_Parcels.geojson")
+
+duplex_footprint <- 2774
+
+d <- right_join(parcels,st_drop_geometry(addr),by="PIN") %>% filter(LBCSDesc %in% c("Res-Single Family", "Res-MH-SW", "Res-MH-DW-TW")) %>% filter(OwnerAddress!="PROPERTY OFFICE UNC") %>% st_transform(2264) %>% st_make_valid() %>% mutate(area_acr = as.numeric(st_area(.)/43560), area_ft2 = as.numeric(st_area(.))) %>% filter(area_acr<5) %>% mutate(plexable = case_when(area_ft2>=4*duplex_footprint ~ "yes", TRUE ~ "no"))
 
 ```
 
-Now we join the address data to the parcel data, so we can summarise by owner count. We tag owners with "same city" if their mailing address is in same city and/or zip code as the address of the parcel. We tag owners with "in state" if their mailing address is in NC. We tag them as individuals if their name does not include the terms LLC, University, Carolina, INC, Company, Home Trust or Habitat (for Humanity).
-
-```{r}
-data$STATE <- gsub(" ", "", data$STATE)
-d <- left_join(data,addr,by="PIN") %>% 
-  filter(PIN %in% addr$PIN) %>% 
-  mutate(owner_name = paste0(OWNER1_FIRST," ",OWNER1_LAST),
-         parcel_count = 1,
-         samecity_owner = case_when(
-           ZIPCODE == ZipCode | CITY == MailingCit ~ 1,
-           TRUE ~ 0
-         ),
-         in_state_owner = case_when(
-           STATE == "NC" ~ 1,
-           TRUE ~ 0
-         ),
-         corp_owner = case_when(
-           grepl("LLC", owner_name) | grepl("CAROLINA", owner_name) | grepl("HOME TRUST", owner_name) | grepl("UNIVERSITY", owner_name) | grepl("CORP", owner_name) | grepl(" INC ", owner_name) | grepl("INC ", owner_name) | grepl(" INC", owner_name) | grepl("COMPANY", owner_name)| grepl("TOWN", owner_name)| grepl("CITY", owner_name)|  grepl("HABITAT", owner_name) ~ 1,
-           TRUE ~ 0
-         )
-  )
-
-```
-
-### How many people in each city own more than one house there?
-
-OK first, how many **individual/non-corporate owners who live in the same city as their houses** own more than one house in each City in Orange County
+We then filter to only parcels in CH, and animate the plot.
 
 ```{r, results="asis"}
-multi_owners <- d %>%
-  group_by(owner_name, corp_owner, samecity_owner, in_state_owner, NAME) %>%
-  filter(corp_owner == 0) %>%
-  filter(samecity_owner == 1) %>%
-  filter(NAME != "DURHAM") %>%
-  summarise(owner_count = sum(parcel_count)) %>%
-  mutate(owns_multiple = case_when(
-    owner_count > 1 ~ "same-city individuals with more than one house",
-    TRUE ~ "same-city indivudals with only one house")
-  )
+data2 <- data %>% filter(PIN %in% d$PIN)
+gif <- data2 %>% filter(FinArea < 6000 & YearBlt > 1900 & Shape_Area < 43560*2) %>% arrange(desc(YearBlt)) %>%
+    ggplot(aes(x=Shape_Area/43560, y=FinArea, color=YearBlt)) +
+    geom_point(alpha=0.5) + transition_time(YearBlt) + labs(title = 'Year: {frame_time}') + shadow_mark() + scale_colour_viridis_b() + xlab("Lot Size (Acres)") + ylab("Unit sqft")
+gif<-animate(gif, renderer=gifski_renderer())
 
-kable(table(multi_owners$NAME,multi_owners$owns_multiple))
-
-```
-
-### Aggregate home ownership by owner type
-
-OK Now. Let's see how many **homes** in each city are owned by each of
-
-a\) Same-city individuals with 1 house
-
-b\) Same-city individuals with 2+ houses
-
-c\) Non-local individuals with 1+ houses
-
-d\) Corporations with 1+ houses
-
-e\) government or universities or community home trust with 1+ houses
-
-```{r, results="asis"}
-ownership_by_type <- d %>%
-  group_by(owner_name, corp_owner, samecity_owner, in_state_owner, NAME) %>%
-  filter(NAME != "DURHAM") %>%
-  summarise(owner_count = sum(parcel_count)) %>%
-  mutate(owns_multiple = case_when(
-    owner_count > 1 ~ "same-city individuals with more than one house",
-    TRUE ~ "same-city indivudals with only one house")
-  ) %>%
-  mutate(
-    owner_type = case_when(
-      corp_owner == 0 & samecity_owner == 1 & owner_count ==1 ~ "a. same city individual with 1 house",
-      corp_owner == 0 & samecity_owner == 1 & owner_count >1 ~  "b. same city individual with 2+ house",
-      corp_owner == 0 & samecity_owner == 0 ~ "c. nonresident individual owner",
-      corp_owner == 1 & !(grepl("UNIVERSITY",owner_name) | grepl("TOWN", owner_name) | grepl("CAROLINA", owner_name)| grepl("HOME TRUST", owner_name)| grepl("HABITAT", owner_name)) ~ "d. corp",
-      corp_owner == 1 & (grepl("UNIVERSITY",owner_name)| grepl("TOWN", owner_name) | grepl("CAROLINA", owner_name)| grepl("HOME TRUST", owner_name) | grepl("HABITAT", owner_name)) ~ "e. university/govt/home trust"                    )
-  ) %>%
-  group_by(owner_type,NAME) %>%
-  summarise(houses_owned = sum(owner_count)) %>% filter(!(NAME %in% c("Unincorporated")))
-
-ggplot(ownership_by_type, aes(fill=owner_type, y= houses_owned, x=NAME)) +
-  geom_bar(position="stack", stat="identity") + geom_text(aes(label=houses_owned), position = "stack")
+anim_save("gig.gif",gif)
+gif
 ```
