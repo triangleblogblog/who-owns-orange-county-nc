@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Trends in home and lot size over time in Chapel Hill</title>
+<title>Who owns the single family residences in Orange County, NC</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -101,7 +101,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <div class="quarto-title-block"><div><h1 class="title">Trends in home and lot size over time in Chapel Hill</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+      <div class="quarto-title-block"><div><h1 class="title">Who owns the single family residences in Orange County, NC</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
                       </div>
   </div>
     
@@ -122,7 +122,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"> <span class="header-section-number">1</span> Introduction</a></li>
   <li><a href="#get-some-data" id="toc-get-some-data" class="nav-link" data-scroll-target="#get-some-data"> <span class="header-section-number">2</span> Get some data</a></li>
   <li><a href="#read-in-the-data" id="toc-read-in-the-data" class="nav-link" data-scroll-target="#read-in-the-data"> <span class="header-section-number">3</span> Read in the data!</a></li>
-  <li><a href="#summarise-the-data" id="toc-summarise-the-data" class="nav-link" data-scroll-target="#summarise-the-data"> <span class="header-section-number">4</span> Summarise the data</a></li>
+  <li><a href="#summarise-the-data" id="toc-summarise-the-data" class="nav-link" data-scroll-target="#summarise-the-data"> <span class="header-section-number">4</span> Summarise the data</a>
+  <ul class="collapse">
+  <li><a href="#how-many-people-in-each-city-own-more-than-one-house-there" id="toc-how-many-people-in-each-city-own-more-than-one-house-there" class="nav-link" data-scroll-target="#how-many-people-in-each-city-own-more-than-one-house-there"> <span class="header-section-number">4.1</span> How many people in each city own more than one house there?</a></li>
+  <li><a href="#aggregate-home-ownership-by-owner-type" id="toc-aggregate-home-ownership-by-owner-type" class="nav-link" data-scroll-target="#aggregate-home-ownership-by-owner-type"> <span class="header-section-number">4.2</span> Aggregate home ownership by owner type</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -135,13 +139,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="introduction" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
-<p>Let’s look at the trend in the lot size and home size of houses built in Chapel Hill over time.</p>
+<p>Let’s find out how many residents in Orange County, NC own multiple single-family homes or townhomes!</p>
 </section>
 <section id="get-some-data" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="get-some-data"><span class="header-section-number">2</span> Get some data</h2>
-<p>We need: Year Built Structure Type, Parcel Size, and Floor area.</p>
-<p>Let’s pull in the Orange County parcel data, which tells us where parcels are and their area. It’s available <a href="ParcelsGDB.zip">here</a>.</p>
-<p>We also need the Orange County Address data, which has the year built, floor area. That’s available <a href="%22https://web.co.orange.nc.us/gisdownloads/addresses.zip%22">here</a>.</p>
+<p>We need: Owner name and Structure type.</p>
+<p>Let’s pull in the Orange County parcel data, which includes owner information. It’s available <a href="ParcelsGDB.zip">here</a>.</p>
+<p>We also need the Orange County Address data, which has the land use code. That’s available <a href="%22https://web.co.orange.nc.us/gisdownloads/addresses.zip%22">here</a>.</p>
 <p>Finally, we need the municipal boundaries to accurately capture which jurisdictions are relevant. That’s available <a href="%22https://web.co.orange.nc.us/gisdownloads/city.zip%22">here</a>.</p>
 <div class="cell">
 
@@ -162,7 +166,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="read-in-the-data" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="read-in-the-data"><span class="header-section-number">3</span> Read in the data!</h2>
-<p>And get only the Chapel Hill boundary.</p>
 <div class="cell">
 <details>
 <summary>show the code</summary>
@@ -174,42 +177,176 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <details>
 <summary>show the code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>addr <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"addresses.shp"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>city <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"city.shp"</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ch <span class="ot">&lt;-</span> city <span class="sc">%&gt;%</span> <span class="fu">filter</span>(CITYCODE <span class="sc">==</span> <span class="st">"CH"</span>) <span class="sc">%&gt;%</span> <span class="fu">st_union</span>() <span class="sc">%&gt;%</span> <span class="fu">st_as_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>city <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"city.shp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="summarise-the-data" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="summarise-the-data"><span class="header-section-number">4</span> Summarise the data</h2>
-<p>First, we filter the addresses to only single family-type residences.</p>
+<p>First, we filter the addresses to only single family-type residences. This includes:</p>
+<ul>
+<li><p>Detached single-family</p></li>
+<li><p>Attached single-family</p></li>
+<li><p>Duplex</p></li>
+<li><p>Zero lot line row houses</p></li>
+<li><p>Accessory units</p></li>
+<li><p>Townhouses</p></li>
+<li><p>Manufactured houses</p></li>
+</ul>
+<p>This corresponds to those whose address LBCS Structure codes are in category <strong>1100 other than condominiums (category 1170)</strong> and <strong>single apartments (category 1160)</strong></p>
 <details>
 <summary>show the code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>addr <span class="ot">&lt;-</span> addr <span class="sc">%&gt;%</span> <span class="fu">filter</span>(LBCSSubCod <span class="sc">&lt;</span> <span class="dv">1160</span> <span class="sc">&amp;</span> LBCSSubCod <span class="sc">&gt;</span><span class="dv">0</span>) </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>addr <span class="ot">&lt;-</span> addr[ch,]</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#mapview::mapview(addr,zcol="LBCSDesc")</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>parcels <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(<span class="st">"All_Parcels.geojson"</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>duplex_footprint <span class="ot">&lt;-</span> <span class="dv">2774</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">right_join</span>(parcels,<span class="fu">st_drop_geometry</span>(addr),<span class="at">by=</span><span class="st">"PIN"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(LBCSDesc <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Res-Single Family"</span>, <span class="st">"Res-MH-SW"</span>, <span class="st">"Res-MH-DW-TW"</span>)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(OwnerAddress<span class="sc">!=</span><span class="st">"PROPERTY OFFICE UNC"</span>) <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="dv">2264</span>) <span class="sc">%&gt;%</span> <span class="fu">st_make_valid</span>() <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">area_acr =</span> <span class="fu">as.numeric</span>(<span class="fu">st_area</span>(.)<span class="sc">/</span><span class="dv">43560</span>), <span class="at">area_ft2 =</span> <span class="fu">as.numeric</span>(<span class="fu">st_area</span>(.))) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(area_acr<span class="sc">&lt;</span><span class="dv">5</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">plexable =</span> <span class="fu">case_when</span>(area_ft2<span class="sc">&gt;=</span><span class="dv">4</span><span class="sc">*</span>duplex_footprint <span class="sc">~</span> <span class="st">"yes"</span>, <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"no"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<p>We then filter to only parcels in CH, and animate the plot.</p>
-<details>
-<summary>show the code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>data2 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(PIN <span class="sc">%in%</span> d<span class="sc">$</span>PIN)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>gif <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(FinArea <span class="sc">&lt;</span> <span class="dv">6000</span> <span class="sc">&amp;</span> YearBlt <span class="sc">&gt;</span> <span class="dv">1900</span> <span class="sc">&amp;</span> Shape_Area <span class="sc">&lt;</span> <span class="dv">43560</span><span class="sc">*</span><span class="dv">2</span>) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(YearBlt)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Shape_Area<span class="sc">/</span><span class="dv">43560</span>, <span class="at">y=</span>FinArea, <span class="at">color=</span>YearBlt)) <span class="sc">+</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">transition_time</span>(YearBlt) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Year: {frame_time}'</span>) <span class="sc">+</span> <span class="fu">shadow_mark</span>() <span class="sc">+</span> <span class="fu">scale_colour_viridis_b</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Lot Size (Acres)"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Unit sqft"</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>gif<span class="ot">&lt;-</span><span class="fu">animate</span>(gif, <span class="at">renderer=</span><span class="fu">gifski_renderer</span>())</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="st">"gig.gif"</span>,gif)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>gif</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>addr <span class="ot">&lt;-</span> addr <span class="sc">%&gt;%</span> <span class="fu">filter</span>(LBCSSubCod <span class="sc">&lt;</span> <span class="dv">1160</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(LBCSSubCod <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>addr, <span class="fu">aes</span>(<span class="at">x=</span>LBCSDesc)) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-5-1.gif" class="img-fluid"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="864"></p>
+</div>
+<p>We then join in the actual city boundaries.</p>
+<div class="cell">
+<details>
+<summary>show the code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>addr <span class="ot">&lt;-</span> <span class="fu">st_join</span>(addr,city)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>addr<span class="sc">$</span>NAME[<span class="fu">which</span>(<span class="fu">is.na</span>(addr<span class="sc">$</span>NAME))] <span class="ot">&lt;-</span> <span class="st">"Unincorporated"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Now we join the address data to the parcel data, so we can summarise by owner count. We tag owners with “same city” if their mailing address is in same city and/or zip code as the address of the parcel. We tag owners with “in state” if their mailing address is in NC. We tag them as individuals if their name does not include the terms LLC, University, Carolina, INC, Company, Home Trust or Habitat (for Humanity).</p>
+<div class="cell">
+<details>
+<summary>show the code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>STATE <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">" "</span>, <span class="st">""</span>, data<span class="sc">$</span>STATE)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">left_join</span>(data,addr,<span class="at">by=</span><span class="st">"PIN"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PIN <span class="sc">%in%</span> addr<span class="sc">$</span>PIN) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">owner_name =</span> <span class="fu">paste0</span>(OWNER1_FIRST,<span class="st">" "</span>,OWNER1_LAST),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">parcel_count =</span> <span class="dv">1</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">samecity_owner =</span> <span class="fu">case_when</span>(</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>           ZIPCODE <span class="sc">==</span> ZipCode <span class="sc">|</span> CITY <span class="sc">==</span> MailingCit <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>           <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">0</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>         ),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">in_state_owner =</span> <span class="fu">case_when</span>(</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>           STATE <span class="sc">==</span> <span class="st">"NC"</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>           <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">0</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>         ),</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">corp_owner =</span> <span class="fu">case_when</span>(</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>           <span class="fu">grepl</span>(<span class="st">"LLC"</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"CAROLINA"</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"HOME TRUST"</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"UNIVERSITY"</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"CORP"</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">" INC "</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"INC "</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">" INC"</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"COMPANY"</span>, owner_name)<span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"TOWN"</span>, owner_name)<span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"CITY"</span>, owner_name)<span class="sc">|</span>  <span class="fu">grepl</span>(<span class="st">"HABITAT"</span>, owner_name) <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>           <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">0</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="how-many-people-in-each-city-own-more-than-one-house-there" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="how-many-people-in-each-city-own-more-than-one-house-there"><span class="header-section-number">4.1</span> How many people in each city own more than one house there?</h3>
+<p>OK first, how many <strong>individual/non-corporate owners who live in the same city as their houses</strong> own more than one house in each City in Orange County</p>
+<details>
+<summary>show the code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>multi_owners <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(owner_name, corp_owner, samecity_owner, in_state_owner, NAME) <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(corp_owner <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(samecity_owner <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"DURHAM"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">owner_count =</span> <span class="fu">sum</span>(parcel_count)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">owns_multiple =</span> <span class="fu">case_when</span>(</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    owner_count <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"same-city individuals with more than one house"</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"same-city indivudals with only one house"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<pre><code>`summarise()` has grouped output by 'owner_name', 'corp_owner',
+'samecity_owner', 'in_state_owner'. You can override using the `.groups`
+argument.</code></pre>
+<details>
+<summary>show the code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">table</span>(multi_owners<span class="sc">$</span>NAME,multi_owners<span class="sc">$</span>owns_multiple))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 45%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">same-city individuals with more than one house</th>
+<th style="text-align: right;">same-city indivudals with only one house</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CARRBORO</td>
+<td style="text-align: right;">123</td>
+<td style="text-align: right;">3548</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CHAPEL HILL</td>
+<td style="text-align: right;">428</td>
+<td style="text-align: right;">7965</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HILLSBOROUGH</td>
+<td style="text-align: right;">95</td>
+<td style="text-align: right;">2545</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MEBANE</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">1177</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Unincorporated</td>
+<td style="text-align: right;">1484</td>
+<td style="text-align: right;">16303</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="aggregate-home-ownership-by-owner-type" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="aggregate-home-ownership-by-owner-type"><span class="header-section-number">4.2</span> Aggregate home ownership by owner type</h3>
+<p>OK Now. Let’s see how many <strong>homes</strong> in each city are owned by each of</p>
+<p>a) Same-city individuals with 1 house</p>
+<p>b) Same-city individuals with 2+ houses</p>
+<p>c) Non-local individuals with 1+ houses</p>
+<p>d) Corporations with 1+ houses</p>
+<p>e) government or universities or community home trust with 1+ houses</p>
+<details>
+<summary>show the code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ownership_by_type <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(owner_name, corp_owner, samecity_owner, in_state_owner, NAME) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"DURHAM"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">owner_count =</span> <span class="fu">sum</span>(parcel_count)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">owns_multiple =</span> <span class="fu">case_when</span>(</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    owner_count <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"same-city individuals with more than one house"</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"same-city indivudals with only one house"</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">owner_type =</span> <span class="fu">case_when</span>(</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>      corp_owner <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> samecity_owner <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> owner_count <span class="sc">==</span><span class="dv">1</span> <span class="sc">~</span> <span class="st">"a. same city individual with 1 house"</span>,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>      corp_owner <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> samecity_owner <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> owner_count <span class="sc">&gt;</span><span class="dv">1</span> <span class="sc">~</span>  <span class="st">"b. same city individual with 2+ house"</span>,</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>      corp_owner <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> samecity_owner <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"c. nonresident individual owner"</span>,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>      corp_owner <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> <span class="sc">!</span>(<span class="fu">grepl</span>(<span class="st">"UNIVERSITY"</span>,owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"TOWN"</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"CAROLINA"</span>, owner_name)<span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"HOME TRUST"</span>, owner_name)<span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"HABITAT"</span>, owner_name)) <span class="sc">~</span> <span class="st">"d. corp"</span>,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>      corp_owner <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> (<span class="fu">grepl</span>(<span class="st">"UNIVERSITY"</span>,owner_name)<span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"TOWN"</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"CAROLINA"</span>, owner_name)<span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"HOME TRUST"</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"HABITAT"</span>, owner_name)) <span class="sc">~</span> <span class="st">"e. university/govt/home trust"</span>                    )</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(owner_type,NAME) <span class="sc">%&gt;%</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">houses_owned =</span> <span class="fu">sum</span>(owner_count)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span>(NAME <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Unincorporated"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<pre><code>`summarise()` has grouped output by 'owner_name', 'corp_owner',
+'samecity_owner', 'in_state_owner'. You can override using the `.groups`
+argument.
+`summarise()` has grouped output by 'owner_type'. You can override using the
+`.groups` argument.</code></pre>
+<details>
+<summary>show the code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ownership_by_type, <span class="fu">aes</span>(<span class="at">fill=</span>owner_type, <span class="at">y=</span> houses_owned, <span class="at">x=</span>NAME)) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">"stack"</span>, <span class="at">stat=</span><span class="st">"identity"</span>) <span class="sc">+</span> <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span>houses_owned), <span class="at">position =</span> <span class="st">"stack"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="864"></p>
 </div>
 <!-- -->
 
+</section>
 </section>
 
 </main>
@@ -441,101 +578,184 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Trends in home and lot size over time in Chapel Hill"</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">    title-block-banner: true</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-location: left</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 3</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">    html-math-method: katex</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">    code-summary: "show the code"</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: wrap</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">    number-sections: true</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: </span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">      dark: slate</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">      light: flatly</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">    fig-width: 9</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co">    fig-height: 6</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>Let's look at the trend in the lot size and home size of houses built in Chapel Hill over time.</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## Get some data</span></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>We need: Year Built Structure Type, Parcel Size, and Floor area.</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>Let's pull in the Orange County parcel data, which tells us where parcels are and their area. It's available <span class="co">[</span><span class="ot">here</span><span class="co">](ParcelsGDB.zip)</span>.</span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>We also need the Orange County Address data, which has the year built, floor area. That's available <span class="co">[</span><span class="ot">here</span><span class="co">](%22https://web.co.orange.nc.us/gisdownloads/addresses.zip%22)</span>.</span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>Finally, we need the municipal boundaries to accurately capture which jurisdictions are relevant. That's available <span class="co">[</span><span class="ot">here</span><span class="co">](%22https://web.co.orange.nc.us/gisdownloads/city.zip%22)</span>.</span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, output=FALSE, echo=FALSE, message=FALSE, warning=FALSE}</span></span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mdbr)</span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gganimate)</span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE}</span></span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">"https://web.co.orange.nc.us/gisdownloads/ParcelsGDB.zip"</span>, <span class="at">destfile =</span> <span class="st">"ParcelsGDB.zip"</span>)</span>
-<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span>(<span class="st">"ParcelsGDB.zip"</span>)</span>
-<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">"https://web.co.orange.nc.us/gisdownloads/addresses.zip"</span>, <span class="at">destfile =</span> <span class="st">"addresses.zip"</span>)</span>
-<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span>(<span class="st">"addresses.zip"</span>)</span>
-<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">"https://web.co.orange.nc.us/gisdownloads/city.zip"</span>, <span class="at">destfile =</span> <span class="st">"city.zip"</span>)</span>
-<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span>(<span class="st">"city.zip"</span>)</span>
-<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="fu">## Read in the data!</span></span>
-<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>And get only the Chapel Hill boundary.</span>
-<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_mdb</span>(<span class="st">"ParcelsGDB.mdb"</span>, <span class="at">table=</span><span class="st">"PARCELVIEW"</span>)</span>
-<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>addr <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"addresses.shp"</span>)</span>
-<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>city <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"city.shp"</span>)</span>
-<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>ch <span class="ot">&lt;-</span> city <span class="sc">%&gt;%</span> <span class="fu">filter</span>(CITYCODE <span class="sc">==</span> <span class="st">"CH"</span>) <span class="sc">%&gt;%</span> <span class="fu">st_union</span>() <span class="sc">%&gt;%</span> <span class="fu">st_as_sf</span>()</span>
-<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summarise the data</span></span>
-<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>First, we filter the addresses to only single family-type residences.</span>
-<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, results="asis"}</span></span>
-<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>addr <span class="ot">&lt;-</span> addr <span class="sc">%&gt;%</span> <span class="fu">filter</span>(LBCSSubCod <span class="sc">&lt;</span> <span class="dv">1160</span> <span class="sc">&amp;</span> LBCSSubCod <span class="sc">&gt;</span><span class="dv">0</span>) </span>
-<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>addr <span class="ot">&lt;-</span> addr[ch,]</span>
-<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a><span class="co">#mapview::mapview(addr,zcol="LBCSDesc")</span></span>
-<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>parcels <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(<span class="st">"All_Parcels.geojson"</span>)</span>
-<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>duplex_footprint <span class="ot">&lt;-</span> <span class="dv">2774</span></span>
-<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">right_join</span>(parcels,<span class="fu">st_drop_geometry</span>(addr),<span class="at">by=</span><span class="st">"PIN"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(LBCSDesc <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Res-Single Family"</span>, <span class="st">"Res-MH-SW"</span>, <span class="st">"Res-MH-DW-TW"</span>)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(OwnerAddress<span class="sc">!=</span><span class="st">"PROPERTY OFFICE UNC"</span>) <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="dv">2264</span>) <span class="sc">%&gt;%</span> <span class="fu">st_make_valid</span>() <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">area_acr =</span> <span class="fu">as.numeric</span>(<span class="fu">st_area</span>(.)<span class="sc">/</span><span class="dv">43560</span>), <span class="at">area_ft2 =</span> <span class="fu">as.numeric</span>(<span class="fu">st_area</span>(.))) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(area_acr<span class="sc">&lt;</span><span class="dv">5</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">plexable =</span> <span class="fu">case_when</span>(area_ft2<span class="sc">&gt;=</span><span class="dv">4</span><span class="sc">*</span>duplex_footprint <span class="sc">~</span> <span class="st">"yes"</span>, <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"no"</span>))</span>
-<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a>We then filter to only parcels in CH, and animate the plot.</span>
-<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, results="asis"}</span></span>
-<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a>data2 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(PIN <span class="sc">%in%</span> d<span class="sc">$</span>PIN)</span>
-<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a>gif <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(FinArea <span class="sc">&lt;</span> <span class="dv">6000</span> <span class="sc">&amp;</span> YearBlt <span class="sc">&gt;</span> <span class="dv">1900</span> <span class="sc">&amp;</span> Shape_Area <span class="sc">&lt;</span> <span class="dv">43560</span><span class="sc">*</span><span class="dv">2</span>) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(YearBlt)) <span class="sc">%&gt;%</span></span>
-<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Shape_Area<span class="sc">/</span><span class="dv">43560</span>, <span class="at">y=</span>FinArea, <span class="at">color=</span>YearBlt)) <span class="sc">+</span></span>
-<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">transition_time</span>(YearBlt) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Year: {frame_time}'</span>) <span class="sc">+</span> <span class="fu">shadow_mark</span>() <span class="sc">+</span> <span class="fu">scale_colour_viridis_b</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Lot Size (Acres)"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Unit sqft"</span>)</span>
-<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a>gif<span class="ot">&lt;-</span><span class="fu">animate</span>(gif, <span class="at">renderer=</span><span class="fu">gifski_renderer</span>())</span>
-<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="st">"gig.gif"</span>,gif)</span>
-<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a>gif</span>
-<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<div class="sourceCode" id="cb14" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Who owns the single family residences in Orange County, NC"</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">    title-block-banner: true</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-location: left</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 3</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">    html-math-method: katex</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">    code-summary: "show the code"</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: wrap</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">    number-sections: true</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: </span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co">      dark: slate</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co">      light: flatly</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co">    fig-width: 9</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co">    fig-height: 6</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>Let's find out how many residents in Orange County, NC own multiple single-family homes or townhomes!</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## Get some data</span></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>We need: Owner name and Structure type.</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>Let's pull in the Orange County parcel data, which includes owner information. It's available <span class="co">[</span><span class="ot">here</span><span class="co">](ParcelsGDB.zip)</span>.</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>We also need the Orange County Address data, which has the land use code. That's available <span class="co">[</span><span class="ot">here</span><span class="co">](%22https://web.co.orange.nc.us/gisdownloads/addresses.zip%22)</span>.</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>Finally, we need the municipal boundaries to accurately capture which jurisdictions are relevant. That's available <span class="co">[</span><span class="ot">here</span><span class="co">](%22https://web.co.orange.nc.us/gisdownloads/city.zip%22)</span>.</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, output=FALSE, echo=FALSE, message=FALSE, warning=FALSE}</span></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mdbr)</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE}</span></span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">"https://web.co.orange.nc.us/gisdownloads/ParcelsGDB.zip"</span>, <span class="at">destfile =</span> <span class="st">"ParcelsGDB.zip"</span>)</span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span>(<span class="st">"ParcelsGDB.zip"</span>)</span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">"https://web.co.orange.nc.us/gisdownloads/addresses.zip"</span>, <span class="at">destfile =</span> <span class="st">"addresses.zip"</span>)</span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span>(<span class="st">"addresses.zip"</span>)</span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">"https://web.co.orange.nc.us/gisdownloads/city.zip"</span>, <span class="at">destfile =</span> <span class="st">"city.zip"</span>)</span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span>(<span class="st">"city.zip"</span>)</span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a><span class="fu">## Read in the data!</span></span>
+<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_mdb</span>(<span class="st">"ParcelsGDB.mdb"</span>, <span class="at">table=</span><span class="st">"PARCELVIEW"</span>)</span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a>addr <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"addresses.shp"</span>)</span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a>city <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"city.shp"</span>)</span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summarise the data</span></span>
+<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a>First, we filter the addresses to only single family-type residences. This includes:</span>
+<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Detached single-family</span>
+<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Attached single-family</span>
+<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Duplex</span>
+<span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Zero lot line row houses</span>
+<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Accessory units</span>
+<span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Townhouses</span>
+<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Manufactured houses</span>
+<span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a>This corresponds to those whose address LBCS Structure codes are in category **1100 other than condominiums (category 1170)** and **single apartments (category 1160)**</span>
+<span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-86"><a href="#cb14-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, results="asis"}</span></span>
+<span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a>addr <span class="ot">&lt;-</span> addr <span class="sc">%&gt;%</span> <span class="fu">filter</span>(LBCSSubCod <span class="sc">&lt;</span> <span class="dv">1160</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(LBCSSubCod <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>addr, <span class="fu">aes</span>(<span class="at">x=</span>LBCSDesc)) <span class="sc">+</span></span>
+<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span>
+<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a>We then join in the actual city boundaries.</span>
+<span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a>addr <span class="ot">&lt;-</span> <span class="fu">st_join</span>(addr,city)</span>
+<span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a>addr<span class="sc">$</span>NAME[<span class="fu">which</span>(<span class="fu">is.na</span>(addr<span class="sc">$</span>NAME))] <span class="ot">&lt;-</span> <span class="st">"Unincorporated"</span></span>
+<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a>Now we join the address data to the parcel data, so we can summarise by owner count. We tag owners with "same city" if their mailing address is in same city and/or zip code as the address of the parcel. We tag owners with "in state" if their mailing address is in NC. We tag them as individuals if their name does not include the terms LLC, University, Carolina, INC, Company, Home Trust or Habitat (for Humanity).</span>
+<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-106"><a href="#cb14-106" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>STATE <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">" "</span>, <span class="st">""</span>, data<span class="sc">$</span>STATE)</span>
+<span id="cb14-108"><a href="#cb14-108" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">left_join</span>(data,addr,<span class="at">by=</span><span class="st">"PIN"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-109"><a href="#cb14-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PIN <span class="sc">%in%</span> addr<span class="sc">$</span>PIN) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-110"><a href="#cb14-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">owner_name =</span> <span class="fu">paste0</span>(OWNER1_FIRST,<span class="st">" "</span>,OWNER1_LAST),</span>
+<span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a>         <span class="at">parcel_count =</span> <span class="dv">1</span>,</span>
+<span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a>         <span class="at">samecity_owner =</span> <span class="fu">case_when</span>(</span>
+<span id="cb14-113"><a href="#cb14-113" aria-hidden="true" tabindex="-1"></a>           ZIPCODE <span class="sc">==</span> ZipCode <span class="sc">|</span> CITY <span class="sc">==</span> MailingCit <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a>           <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">0</span></span>
+<span id="cb14-115"><a href="#cb14-115" aria-hidden="true" tabindex="-1"></a>         ),</span>
+<span id="cb14-116"><a href="#cb14-116" aria-hidden="true" tabindex="-1"></a>         <span class="at">in_state_owner =</span> <span class="fu">case_when</span>(</span>
+<span id="cb14-117"><a href="#cb14-117" aria-hidden="true" tabindex="-1"></a>           STATE <span class="sc">==</span> <span class="st">"NC"</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb14-118"><a href="#cb14-118" aria-hidden="true" tabindex="-1"></a>           <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">0</span></span>
+<span id="cb14-119"><a href="#cb14-119" aria-hidden="true" tabindex="-1"></a>         ),</span>
+<span id="cb14-120"><a href="#cb14-120" aria-hidden="true" tabindex="-1"></a>         <span class="at">corp_owner =</span> <span class="fu">case_when</span>(</span>
+<span id="cb14-121"><a href="#cb14-121" aria-hidden="true" tabindex="-1"></a>           <span class="fu">grepl</span>(<span class="st">"LLC"</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"CAROLINA"</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"HOME TRUST"</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"UNIVERSITY"</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"CORP"</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">" INC "</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"INC "</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">" INC"</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"COMPANY"</span>, owner_name)<span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"TOWN"</span>, owner_name)<span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"CITY"</span>, owner_name)<span class="sc">|</span>  <span class="fu">grepl</span>(<span class="st">"HABITAT"</span>, owner_name) <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb14-122"><a href="#cb14-122" aria-hidden="true" tabindex="-1"></a>           <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">0</span></span>
+<span id="cb14-123"><a href="#cb14-123" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb14-124"><a href="#cb14-124" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-125"><a href="#cb14-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-126"><a href="#cb14-126" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-127"><a href="#cb14-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-128"><a href="#cb14-128" aria-hidden="true" tabindex="-1"></a><span class="fu">### How many people in each city own more than one house there?</span></span>
+<span id="cb14-129"><a href="#cb14-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-130"><a href="#cb14-130" aria-hidden="true" tabindex="-1"></a>OK first, how many **individual/non-corporate owners who live in the same city as their houses** own more than one house in each City in Orange County</span>
+<span id="cb14-131"><a href="#cb14-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-132"><a href="#cb14-132" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, results="asis"}</span></span>
+<span id="cb14-133"><a href="#cb14-133" aria-hidden="true" tabindex="-1"></a>multi_owners <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span></span>
+<span id="cb14-134"><a href="#cb14-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(owner_name, corp_owner, samecity_owner, in_state_owner, NAME) <span class="sc">%&gt;%</span></span>
+<span id="cb14-135"><a href="#cb14-135" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(corp_owner <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-136"><a href="#cb14-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(samecity_owner <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-137"><a href="#cb14-137" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"DURHAM"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-138"><a href="#cb14-138" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">owner_count =</span> <span class="fu">sum</span>(parcel_count)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-139"><a href="#cb14-139" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">owns_multiple =</span> <span class="fu">case_when</span>(</span>
+<span id="cb14-140"><a href="#cb14-140" aria-hidden="true" tabindex="-1"></a>    owner_count <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"same-city individuals with more than one house"</span>,</span>
+<span id="cb14-141"><a href="#cb14-141" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"same-city indivudals with only one house"</span>)</span>
+<span id="cb14-142"><a href="#cb14-142" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-143"><a href="#cb14-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-144"><a href="#cb14-144" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">table</span>(multi_owners<span class="sc">$</span>NAME,multi_owners<span class="sc">$</span>owns_multiple))</span>
+<span id="cb14-145"><a href="#cb14-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-146"><a href="#cb14-146" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-147"><a href="#cb14-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-148"><a href="#cb14-148" aria-hidden="true" tabindex="-1"></a><span class="fu">### Aggregate home ownership by owner type</span></span>
+<span id="cb14-149"><a href="#cb14-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-150"><a href="#cb14-150" aria-hidden="true" tabindex="-1"></a>OK Now. Let's see how many **homes** in each city are owned by each of</span>
+<span id="cb14-151"><a href="#cb14-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-152"><a href="#cb14-152" aria-hidden="true" tabindex="-1"></a>a<span class="sc">\)</span> Same-city individuals with 1 house</span>
+<span id="cb14-153"><a href="#cb14-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-154"><a href="#cb14-154" aria-hidden="true" tabindex="-1"></a>b<span class="sc">\)</span> Same-city individuals with 2+ houses</span>
+<span id="cb14-155"><a href="#cb14-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-156"><a href="#cb14-156" aria-hidden="true" tabindex="-1"></a>c<span class="sc">\)</span> Non-local individuals with 1+ houses</span>
+<span id="cb14-157"><a href="#cb14-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-158"><a href="#cb14-158" aria-hidden="true" tabindex="-1"></a>d<span class="sc">\)</span> Corporations with 1+ houses</span>
+<span id="cb14-159"><a href="#cb14-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-160"><a href="#cb14-160" aria-hidden="true" tabindex="-1"></a>e<span class="sc">\)</span> government or universities or community home trust with 1+ houses</span>
+<span id="cb14-161"><a href="#cb14-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-162"><a href="#cb14-162" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, results="asis"}</span></span>
+<span id="cb14-163"><a href="#cb14-163" aria-hidden="true" tabindex="-1"></a>ownership_by_type <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span></span>
+<span id="cb14-164"><a href="#cb14-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(owner_name, corp_owner, samecity_owner, in_state_owner, NAME) <span class="sc">%&gt;%</span></span>
+<span id="cb14-165"><a href="#cb14-165" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"DURHAM"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-166"><a href="#cb14-166" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">owner_count =</span> <span class="fu">sum</span>(parcel_count)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-167"><a href="#cb14-167" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">owns_multiple =</span> <span class="fu">case_when</span>(</span>
+<span id="cb14-168"><a href="#cb14-168" aria-hidden="true" tabindex="-1"></a>    owner_count <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"same-city individuals with more than one house"</span>,</span>
+<span id="cb14-169"><a href="#cb14-169" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"same-city indivudals with only one house"</span>)</span>
+<span id="cb14-170"><a href="#cb14-170" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb14-171"><a href="#cb14-171" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-172"><a href="#cb14-172" aria-hidden="true" tabindex="-1"></a>    <span class="at">owner_type =</span> <span class="fu">case_when</span>(</span>
+<span id="cb14-173"><a href="#cb14-173" aria-hidden="true" tabindex="-1"></a>      corp_owner <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> samecity_owner <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> owner_count <span class="sc">==</span><span class="dv">1</span> <span class="sc">~</span> <span class="st">"a. same city individual with 1 house"</span>,</span>
+<span id="cb14-174"><a href="#cb14-174" aria-hidden="true" tabindex="-1"></a>      corp_owner <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> samecity_owner <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> owner_count <span class="sc">&gt;</span><span class="dv">1</span> <span class="sc">~</span>  <span class="st">"b. same city individual with 2+ house"</span>,</span>
+<span id="cb14-175"><a href="#cb14-175" aria-hidden="true" tabindex="-1"></a>      corp_owner <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> samecity_owner <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"c. nonresident individual owner"</span>,</span>
+<span id="cb14-176"><a href="#cb14-176" aria-hidden="true" tabindex="-1"></a>      corp_owner <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> <span class="sc">!</span>(<span class="fu">grepl</span>(<span class="st">"UNIVERSITY"</span>,owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"TOWN"</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"CAROLINA"</span>, owner_name)<span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"HOME TRUST"</span>, owner_name)<span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"HABITAT"</span>, owner_name)) <span class="sc">~</span> <span class="st">"d. corp"</span>,</span>
+<span id="cb14-177"><a href="#cb14-177" aria-hidden="true" tabindex="-1"></a>      corp_owner <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> (<span class="fu">grepl</span>(<span class="st">"UNIVERSITY"</span>,owner_name)<span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"TOWN"</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"CAROLINA"</span>, owner_name)<span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"HOME TRUST"</span>, owner_name) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"HABITAT"</span>, owner_name)) <span class="sc">~</span> <span class="st">"e. university/govt/home trust"</span>                    )</span>
+<span id="cb14-178"><a href="#cb14-178" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb14-179"><a href="#cb14-179" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(owner_type,NAME) <span class="sc">%&gt;%</span></span>
+<span id="cb14-180"><a href="#cb14-180" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">houses_owned =</span> <span class="fu">sum</span>(owner_count)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span>(NAME <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Unincorporated"</span>)))</span>
+<span id="cb14-181"><a href="#cb14-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-182"><a href="#cb14-182" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ownership_by_type, <span class="fu">aes</span>(<span class="at">fill=</span>owner_type, <span class="at">y=</span> houses_owned, <span class="at">x=</span>NAME)) <span class="sc">+</span></span>
+<span id="cb14-183"><a href="#cb14-183" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">"stack"</span>, <span class="at">stat=</span><span class="st">"identity"</span>) <span class="sc">+</span> <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span>houses_owned), <span class="at">position =</span> <span class="st">"stack"</span>)</span>
+<span id="cb14-184"><a href="#cb14-184" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

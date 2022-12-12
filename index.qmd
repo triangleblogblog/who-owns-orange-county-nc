@@ -1,5 +1,5 @@
 ---
-title: "Trends in home and lot size over time in Chapel Hill"
+title: "Where can we build missing middle housing in Chapel Hill, NC"
 format: 
   html:
     title-block-banner: true
@@ -22,11 +22,11 @@ editor: visual
 
 ## Introduction
 
-Let's look at the trend in the lot size and home size of houses built in Chapel Hill over time.
+Let's look at where we can build missing-middle housing in NC?
 
 ## Get some data
 
-We need: Year Built Structure Type, Parcel Size, and Floor area.
+We need: Owner name and Structure type.
 
 Let's pull in the Orange County parcel data, which tells us where parcels are and their area. It's available [here](ParcelsGDB.zip).
 
@@ -40,7 +40,6 @@ library(Hmisc)
 library(mdbr)
 library(knitr)
 library(sf)
-library(gganimate)
 ```
 
 ```{r, eval = FALSE}
@@ -83,7 +82,7 @@ d <- right_join(parcels,st_drop_geometry(addr),by="PIN") %>% filter(LBCSDesc %in
 
 We then filter to only parcels in CH, and animate the plot.
 
-```{r, results="asis"}
+```{r}
 data2 <- data %>% filter(PIN %in% d$PIN)
 gif <- data2 %>% filter(FinArea < 6000 & YearBlt > 1900 & Shape_Area < 43560*2) %>% arrange(desc(YearBlt)) %>%
     ggplot(aes(x=Shape_Area/43560, y=FinArea, color=YearBlt)) +
@@ -91,5 +90,4 @@ gif <- data2 %>% filter(FinArea < 6000 & YearBlt > 1900 & Shape_Area < 43560*2) 
 gif<-animate(gif, renderer=gifski_renderer())
 
 anim_save("gig.gif",gif)
-gif
 ```
